@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "924951305580",
+    "project_id": "study-notes-dab74",
+    "storage_bucket": "study-notes-dab74.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924951305580:android:e99c7f353566f79e882749",
+        "android_client_info": {
+          "package_name": "com.firstrn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924951305580-a55d43dg1tdsbl12baf47fsrusd169p7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFzK9-M3FIwyVfNIjQnZBML50O6RmPA2Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "924951305580-a55d43dg1tdsbl12baf47fsrusd169p7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
