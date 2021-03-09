@@ -14,6 +14,8 @@ const AddBook2 = ({navigation}) => {
   const [publicDate, setPublicDate] = useState('');
   const [image, setImage] = useState();
 
+  const handleAddBook = () => {};
+
   return (
     <>
       <View style={styles.head}>
@@ -93,32 +95,7 @@ const AddBook2 = ({navigation}) => {
         title="确定"
         buttonStyle={{marginTop: 30, color: 'black'}}
         style={{backgroundColor: '#fff'}}
-        // type="outline"
-      />
-
-      <Button
-        title="open picker"
-        onPress={() => {
-          // ImagePicker.openPicker({
-          //   width: 300,
-          //   height: 400,
-          //   cropping: true,
-          // }).then((image) => {
-          //   console.log(image);
-          // });
-          ImagePicker.openCamera({
-            width: 300,
-            height: 400,
-            cropping: true,
-          })
-            .then((image) => {
-              console.log(image);
-              setImgPath(image.path);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        }}
+        onPress={handleAddBook}
       />
     </>
   );

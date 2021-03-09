@@ -18,6 +18,9 @@ import Search from './pages/Search';
 import AddBook from './pages/AddBook';
 import AddBook2 from './pages/AddBook2';
 import Camera from './pages/Camera';
+import {Provider} from 'react-redux';
+import {store, persistor} from './store/index';
+import {PersistGate} from 'redux-persist/integration/react';
 
 const theme = {
   Button: {
@@ -62,20 +65,24 @@ const HomeTabs = (props) => (
 function App() {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <ThemeProvider theme={theme}>
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-            }}>
-            <Stack.Screen name="HomeTabs" component={HomeTabs} />
-            <Stack.Screen name="Search" component={Search} />
-            <Stack.Screen name="AddBook" component={AddBook2} />
-            <Stack.Screen name="Camera" component={Camera} />
-            {/* <Stack.Screen name="AddBook2" component={AddBook2} /> */}
-          </Stack.Navigator>
-        </ThemeProvider>
-      </NavigationContainer>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <NavigationContainer>
+            <ThemeProvider theme={theme}>
+              <Stack.Navigator
+                screenOptions={{
+                  headerShown: false,
+                }}>
+                <Stack.Screen name="HomeTabs" component={HomeTabs} />
+                <Stack.Screen name="Search" component={Search} />
+                <Stack.Screen name="AddBook" component={AddBook2} />
+                <Stack.Screen name="Camera" component={Camera} />
+                {/* <Stack.Screen name="AddBook2" component={AddBook2} /> */}
+              </Stack.Navigator>
+            </ThemeProvider>
+          </NavigationContainer>
+        </PersistGate>
+      </Provider>
     </SafeAreaProvider>
   );
 }
