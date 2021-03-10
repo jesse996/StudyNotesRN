@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, useRef, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {Button} from 'react-native';
 import {View} from 'react-native';
@@ -8,6 +8,7 @@ import {FlatList} from 'react-native';
 import {TouchableHighlight, TouchableOpacity} from 'react-native';
 import Toast from 'react-native-toast-message';
 import {connect, useSelector} from 'react-redux';
+import {Pressable} from 'react-native';
 
 const BookItem = (props) => {
   const {image} = props;
@@ -15,7 +16,7 @@ const BookItem = (props) => {
     <View {...props}>
       <Image
         source={{
-          uri: `data:${image.mime};base64,${image.data}`,
+          uri: `data:${image?.mime};base64,${image?.data}`,
         }}
         style={{
           width: 110,
@@ -60,28 +61,34 @@ const BookShelf = ({url, navigation}) => {
   // data = [...data, ...books];
   const data = books;
 
+  // const isEditing = useRef(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const toggleTarBarVisible = () => {
+    // isEditing.current = !isEditing.current;
+    setIsEditing((e) => !e);
+    navigation.setOptions({
+      tabBarVisible: isEditing,
+    });
+  };
+
   return (
     <>
       <View style={styles.head}>
         <Text h4 style={styles.title}>
           我的书架
         </Text>
-        <Text style={styles.edit}>编辑</Text>
-      </View>
-      <View style={styles.search}>
-        <Icon name="search" color="gray" />
-        <Text
-          style={styles.hint}
-          onPress={() => {
-            navigation.navigate('Search');
-            // navigation.setOptions({
-            //   tabBarVisible: false,
-            // });
-            console.log('press');
-          }}>
-          搜索书本或笔记内容
+        <Text style={styles.edit} onPress={toggleTarBarVisible}>
+          {isEditing ? '取消' : '编辑'}
         </Text>
       </View>
+      <Pressable
+        style={styles.search}
+        onPress={() => {
+          navigation.navigate('Search');
+        }}>
+        <Icon name="search" color="gray" />
+        <Text style={styles.hint}>搜索书本或笔记内容</Text>
+      </Pressable>
       {/* 书架内容 */}
       <View style={styles.container}>
         <FlatList
@@ -89,13 +96,7 @@ const BookShelf = ({url, navigation}) => {
           renderItem={renderBooks}
           keyExtractor={(item, index) => index}
           numColumns={3}
-          contentContainerStyle={{
-            justifyContent: 'center',
-            // alignItems: 'flex-start',
-            // alignItems: 'center',
-            // flex: 1,
-            // marginLeft: 20,
-          }}
+          contentContainerStyle={{justifyContent: 'center'}}
         />
       </View>
     </>

@@ -4,11 +4,18 @@ import {TouchableOpacity} from 'react-native';
 import {TextInput} from 'react-native';
 import {StyleSheet} from 'react-native';
 import {View} from 'react-native';
-import {Button, Icon, Image} from 'react-native-elements';
+import {
+  BottomSheet,
+  Button,
+  Icon,
+  Image,
+  ListItem,
+} from 'react-native-elements';
 import ImagePicker from 'react-native-image-crop-picker';
 import {useDispatch} from 'react-redux';
 import Toast from 'react-native-toast-message';
 import {addBook} from '../store/testSlice';
+import {Pressable} from 'react-native';
 
 const AddBook2 = ({navigation}) => {
   const [bookName, setBookName] = useState('');
@@ -16,6 +23,7 @@ const AddBook2 = ({navigation}) => {
   const [publishing, setPublishing] = useState('');
   const [publicDate, setPublicDate] = useState('');
   const [image, setImage] = useState();
+  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -27,8 +35,78 @@ const AddBook2 = ({navigation}) => {
       text2: '添加成功',
       position: 'bottom',
     });
-    // navigation.goBack();
+    navigation.goBack();
   };
+  const list = [
+    {
+      title: '拍照',
+      containerStyle: {},
+      contentStyle: {
+        alignItems: 'center',
+      },
+      titleStyle: {},
+      onPress: () => {
+        ImagePicker.openCamera({
+          width: 110,
+          height: 150,
+          cropping: true,
+          includeBase64: true,
+          writeTempFile: false,
+          freeStyleCropEnabled: true,
+          // cropperCircleOverlay: true,
+          showCropGuidelines: false,
+        })
+          .then((img) => {
+            // console.log(image);
+            setImage(img);
+          })
+          .catch((e) => {
+            console.log('eroor:');
+            console.log(e);
+          })
+          .finally(() => {
+            setIsBottomSheetVisible(false);
+          });
+      },
+    },
+    {
+      title: '从相册选择',
+      contentStyle: {
+        alignItems: 'center',
+      },
+      onPress: () => {
+        ImagePicker.openPicker({
+          width: 300,
+          height: 400,
+          cropping: true,
+          includeBase64: true,
+          writeTempFile: false,
+          freeStyleCropEnabled: true,
+          // cropperCircleOverlay: true,
+          showCropGuidelines: false,
+        })
+          .then((img) => {
+            setImage(img);
+            // console.log(image);
+          })
+          .catch((e) => {
+            console.log(e);
+          })
+          .finally(() => {
+            setIsBottomSheetVisible(false);
+          });
+      },
+    },
+    {
+      title: '取消',
+      containerStyle: {backgroundColor: 'red'},
+      contentStyle: {
+        alignItems: 'center',
+      },
+      titleStyle: {color: 'white'},
+      onPress: () => setIsBottomSheetVisible(false),
+    },
+  ];
 
   return (
     <>
@@ -41,25 +119,26 @@ const AddBook2 = ({navigation}) => {
         <TouchableOpacity
           style={styles.iconWrap}
           onPress={() => {
+            setIsBottomSheetVisible(true);
             // navigation.navigate('Camera');
-            ImagePicker.openCamera({
-              width: 110,
-              height: 150,
-              cropping: true,
-              includeBase64: true,
-              writeTempFile: false,
-              freeStyleCropEnabled: true,
-              // cropperCircleOverlay: true,
-              showCropGuidelines: false,
-            })
-              .then((image) => {
-                // console.log(image);
-                setImage(image);
-              })
-              .catch((e) => {
-                console.log('eroor:');
-                console.log(e);
-              });
+            // ImagePicker.openCamera({
+            //   width: 110,
+            //   height: 150,
+            //   cropping: true,
+            //   includeBase64: true,
+            //   writeTempFile: false,
+            //   freeStyleCropEnabled: true,
+            //   // cropperCircleOverlay: true,
+            //   showCropGuidelines: false,
+            // })
+            //   .then((image) => {
+            //     // console.log(image);
+            //     setImage(image);
+            //   })
+            //   .catch((e) => {
+            //     console.log('eroor:');
+            //     console.log(e);
+            //   });
           }}>
           {image ? (
             <Image
@@ -111,6 +190,22 @@ const AddBook2 = ({navigation}) => {
         style={{backgroundColor: '#fff'}}
         onPress={handleAddBook}
       />
+
+      <BottomSheet
+        isVisible={isBottomSheetVisible}
+        containerStyle={{backgroundColor: 'rgba(0.5, 0.25, 0, 0.2)'}}>
+        {list.map((l, i) => (
+          <ListItem
+            key={i}
+            bottomDivider={true}
+            containerStyle={l.containerStyle}
+            onPress={l.onPress}>
+            <ListItem.Content style={l.contentStyle}>
+              <ListItem.Title style={l.titleStyle}>{l.title}</ListItem.Title>
+            </ListItem.Content>
+          </ListItem>
+        ))}
+      </BottomSheet>
     </>
   );
 };
