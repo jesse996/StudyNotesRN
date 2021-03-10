@@ -1,7 +1,7 @@
 import React, {memo, useRef, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {View} from 'react-native';
-import {Divider, Icon, Image, Text, Button} from 'react-native-elements';
+import {Divider, Icon, Text, Button, Image} from 'react-native-elements';
 import {ActivityIndicator} from 'react-native';
 import {FlatList} from 'react-native';
 import {TouchableHighlight, TouchableOpacity} from 'react-native';
@@ -11,45 +11,50 @@ import {Pressable} from 'react-native';
 import {deleteBooks} from '../store/testSlice';
 
 const BookItem = (props) => {
-  const {image, selected} = props;
+  const {image, selected, bookName} = props;
+  console.log('bookName:', bookName, ';');
+  const source = image
+    ? {uri: `data:${image?.mime};base64,${image?.data}`}
+    : require('../assets/newBook.png');
+  const imgStyle = image ? {width: 110, height: 150} : {width: 80, height: 120};
   return (
-    <Pressable {...props}>
-      <Image
-        source={{
-          uri: `data:${image?.mime};base64,${image?.data}`,
-        }}
-        style={{
-          width: 110,
-          height: 150,
-        }}
-        containerStyle={{
-          borderRadius: 10,
-        }}
-        PlaceholderContent={<ActivityIndicator />}>
+    <View style={{alignItems: 'center', justifyContent: 'center'}}>
+      <Pressable {...props}>
+        <Image
+          source={source}
+          style={imgStyle}
+          containerStyle={{
+            borderRadius: 10,
+          }}
+          PlaceholderContent={<ActivityIndicator />}>
+          {selected ? (
+            // 这个是选中端阴影层
+            <View
+              style={{
+                backgroundColor: 'rgba(100, 100, 100, .6)',
+                flex: 1,
+              }}
+            />
+          ) : null}
+        </Image>
         {selected ? (
-          <View
-            style={{
-              backgroundColor: 'rgba(100, 100, 100, .6)',
-              flex: 1,
+          // 这个是选中左上角的图标
+          <Icon
+            name="check-circle"
+            // color="#fff"
+            color="#2b78fe"
+            containerStyle={{
+              position: 'absolute',
+              left: 2,
+              top: 2,
+              backgroundColor: '#fff',
+              borderRadius: 50,
             }}
           />
         ) : null}
-      </Image>
-      {selected ? (
-        <Icon
-          name="check-circle"
-          // color="#fff"
-          color="#2b78fe"
-          containerStyle={{
-            position: 'absolute',
-            left: 2,
-            top: 2,
-            backgroundColor: '#fff',
-            borderRadius: 50,
-          }}
-        />
-      ) : null}
-    </Pressable>
+      </Pressable>
+      <Text>{bookName.trim() ? bookName.trim() : '未命名'}</Text>
+    </View>
   );
 };
 
@@ -67,16 +72,8 @@ const BookShelf = ({url, navigation}) => {
 
   const handlePressBook = (index) => {
     if (isEditing) {
-      // if (selectBooksIndex.includes(index)) {
-      //   selectBooksIndex[index] = true;
-      //   setSelectBooksIndex(selectBooksIndex);
-      // }else{
-
-      // }
-
       selectBooksIndex[index] = !selectBooksIndex[index];
       setSelectBooksIndex([...selectBooksIndex]);
-      // setSelectBooksIndex([...selectBooksIndex, index]);
     } else {
     }
   };
@@ -114,7 +111,8 @@ const BookShelf = ({url, navigation}) => {
     return (
       <BookItem
         image={item.image}
-        style={[styles.item, selectBooksIndex[index] ? styles.itemActive : '']}
+        style={styles.item}
+        bookName={item.bookName}
         selected={selectBooksIndex[index]}
         onPress={() => handlePressBook(index)}
       />
@@ -216,11 +214,7 @@ const styles = StyleSheet.create({
     borderColor: '#DDD',
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'relative',
-  },
-  itemActive: {
-    // backgroundColor: '#DDD',
-    // zIndex: 20,
+    // position: 'relative',
   },
 });
 
