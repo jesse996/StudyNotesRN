@@ -16,6 +16,7 @@ import {useDispatch} from 'react-redux';
 import Toast from 'react-native-toast-message';
 import {addBook} from '../store/testSlice';
 import {Pressable} from 'react-native';
+import {TouchableHighlight} from 'react-native';
 
 const AddBook2 = ({navigation}) => {
   const [bookName, setBookName] = useState('');
@@ -111,34 +112,20 @@ const AddBook2 = ({navigation}) => {
   return (
     <>
       <View style={styles.head}>
-        <Icon name="arrow-back-ios" containerStyle={styles.icon} />
+        <Icon
+          name="arrow-back-ios"
+          containerStyle={styles.icon}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
         <Text style={styles.title}>自定义创建</Text>
       </View>
       <View style={styles.wrap}>
-        {/* <Image style={{width: 110, height: 150}} /> */}
         <TouchableOpacity
           style={styles.iconWrap}
           onPress={() => {
             setIsBottomSheetVisible(true);
-            // navigation.navigate('Camera');
-            // ImagePicker.openCamera({
-            //   width: 110,
-            //   height: 150,
-            //   cropping: true,
-            //   includeBase64: true,
-            //   writeTempFile: false,
-            //   freeStyleCropEnabled: true,
-            //   // cropperCircleOverlay: true,
-            //   showCropGuidelines: false,
-            // })
-            //   .then((image) => {
-            //     // console.log(image);
-            //     setImage(image);
-            //   })
-            //   .catch((e) => {
-            //     console.log('eroor:');
-            //     console.log(e);
-            //   });
           }}>
           {image ? (
             <Image
@@ -186,8 +173,13 @@ const AddBook2 = ({navigation}) => {
       </View>
       <Button
         title="确定"
-        buttonStyle={{marginTop: 30, color: 'black'}}
-        style={{backgroundColor: '#fff'}}
+        raised={false}
+        containerStyle={{
+          paddingVertical: 30,
+          color: 'black',
+          paddingHorizontal: 10,
+          backgroundColor: '#FFF',
+        }}
         onPress={handleAddBook}
       />
 
@@ -214,12 +206,15 @@ const styles = StyleSheet.create({
   head: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     paddingTop: 30,
     backgroundColor: '#fff',
   },
   icon: {
     position: 'absolute',
-    left: 20,
+    left: 30,
+    top: 32,
+    zIndex: 2,
     // width: 25,
     // height: 25,
   },

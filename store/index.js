@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  stateReconciler: autoMergeLevel2,
+  // stateReconciler: autoMergeLevel2,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
