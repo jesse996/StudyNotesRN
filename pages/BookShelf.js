@@ -11,9 +11,9 @@ import {connect, useSelector} from 'react-redux';
 import {Pressable} from 'react-native';
 
 const BookItem = (props) => {
-  const {image} = props;
+  const {image, selected} = props;
   return (
-    <View {...props}>
+    <Pressable {...props}>
       <Image
         source={{
           uri: `data:${image?.mime};base64,${image?.data}`,
@@ -25,14 +25,57 @@ const BookItem = (props) => {
         containerStyle={{
           borderRadius: 10,
         }}
-        PlaceholderContent={<ActivityIndicator />}
-      />
-    </View>
+        PlaceholderContent={<ActivityIndicator />}>
+        {selected ? (
+          <View
+            style={{
+              backgroundColor: 'rgba(100, 100, 100, .6)',
+              flex: 1,
+            }}
+          />
+        ) : null}
+      </Image>
+      {selected ? (
+        <Icon
+          name="check-circle"
+          // color="#fff"
+          color="#2b78fe"
+          containerStyle={{
+            position: 'absolute',
+            left: 2,
+            top: 2,
+            backgroundColor: '#fff',
+            borderRadius: 50,
+          }}
+        />
+      ) : null}
+    </Pressable>
   );
 };
 
 const BookShelf = ({url, navigation}) => {
   const books = useSelector((state) => state.main.allBooks);
+
+  const [selectBooksIndex, setSelectBooksIndex] = useState(
+    Array(books.length).fill(false),
+  );
+
+  const handlePressBook = (index) => {
+    if (isEditing) {
+      // if (selectBooksIndex.includes(index)) {
+      //   selectBooksIndex[index] = true;
+      //   setSelectBooksIndex(selectBooksIndex);
+      // }else{
+
+      // }
+
+      selectBooksIndex[index] = !selectBooksIndex[index];
+      setSelectBooksIndex([...selectBooksIndex]);
+      // setSelectBooksIndex([...selectBooksIndex, index]);
+    } else {
+    }
+  };
+
   const renderBooks = ({item, index}) => {
     if (index === 0) {
       return (
@@ -46,7 +89,14 @@ const BookShelf = ({url, navigation}) => {
         </TouchableOpacity>
       );
     }
-    return <BookItem image={item.image} style={styles.item} />;
+    return (
+      <BookItem
+        image={item.image}
+        style={[styles.item, selectBooksIndex[index] ? styles.itemActive : '']}
+        selected={selectBooksIndex[index]}
+        onPress={() => handlePressBook(index)}
+      />
+    );
   };
   // let data = [...Array(15).keys()].map((i) => ({
   //   // id: i,
@@ -66,6 +116,7 @@ const BookShelf = ({url, navigation}) => {
   const toggleTarBarVisible = () => {
     // isEditing.current = !isEditing.current;
     setIsEditing((e) => !e);
+    setSelectBooksIndex(Array(books.length));
     navigation.setOptions({
       tabBarVisible: isEditing,
     });
@@ -154,6 +205,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
+  },
+  itemActive: {
+    backgroundColor: '#DDD',
+    zIndex: 20,
   },
 });
 
