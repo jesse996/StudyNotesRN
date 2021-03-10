@@ -83,7 +83,13 @@ const BookShelf = ({url, navigation}) => {
 
   const handleDelete = () => {
     dispatch(deleteBooks(selectBooksIndex));
-    setIsEditing(false);
+    toggleTarBarVisible();
+  };
+  const data = books;
+
+  const [isEditing, setIsEditing] = useState(false);
+  const toggleTarBarVisible = () => {
+    setIsEditing((e) => !e);
     setSelectBooksIndex(Array(books?.length).fill(false));
     navigation.setOptions({
       tabBarVisible: isEditing,
@@ -113,21 +119,6 @@ const BookShelf = ({url, navigation}) => {
         onPress={() => handlePressBook(index)}
       />
     );
-  };
-
-  // data = [...data, ...books];
-  // const data = [{}, ...books];
-  const data = books;
-
-  // const isEditing = useRef(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const toggleTarBarVisible = () => {
-    // isEditing.current = !isEditing.current;
-    setIsEditing((e) => !e);
-    setSelectBooksIndex(Array(books?.length).fill(false));
-    navigation.setOptions({
-      tabBarVisible: isEditing,
-    });
   };
 
   return (
