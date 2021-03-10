@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {StyleSheet} from 'react-native';
 import {Button} from 'react-native';
 import {View} from 'react-native';
@@ -6,13 +6,16 @@ import {Divider, Icon, Image, Text} from 'react-native-elements';
 import {ActivityIndicator} from 'react-native';
 import {FlatList} from 'react-native';
 import {TouchableHighlight, TouchableOpacity} from 'react-native';
+import Toast from 'react-native-toast-message';
+import {connect, useSelector} from 'react-redux';
 
 const BookItem = (props) => {
+  const {image} = props;
   return (
     <View {...props}>
       <Image
         source={{
-          uri: props.url,
+          uri: `data:${image.mime};base64,${image.data}`,
         }}
         style={{
           width: 110,
@@ -28,6 +31,7 @@ const BookItem = (props) => {
 };
 
 const BookShelf = ({url, navigation}) => {
+  const books = useSelector((state) => state.main.allBooks);
   const renderBooks = ({item, index}) => {
     if (index === 0) {
       return (
@@ -41,12 +45,21 @@ const BookShelf = ({url, navigation}) => {
         </TouchableOpacity>
       );
     }
-    return <BookItem url={item.url} style={styles.item} />;
+    return <BookItem image={item.image} style={styles.item} />;
   };
-  const data = [...Array(15).keys()].map((i) => ({
-    id: i,
-    url: 'https://img9.doubanio.com/view/photo/l/public/p2615115166.webp',
-  }));
+  // let data = [...Array(15).keys()].map((i) => ({
+  //   // id: i,
+  //   // url: 'https://img9.doubanio.com/view/photo/l/public/p2615115166.webp',
+  //   image: {},
+  //   bookName: 'test',
+  //   author: '',
+  //   publishing: '',
+  //   publicDate: '',
+  // }));
+
+  // data = [...data, ...books];
+  const data = books;
+
   return (
     <>
       <View style={styles.head}>
@@ -70,23 +83,34 @@ const BookShelf = ({url, navigation}) => {
         </Text>
       </View>
       {/* 书架内容 */}
-      <FlatList
-        data={data}
-        renderItem={renderBooks}
-        keyExtractor={(item) => '' + item.id}
-        numColumns={3}
-        contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
-      />
+      <View style={styles.container}>
+        <FlatList
+          data={data}
+          renderItem={renderBooks}
+          keyExtractor={(item, index) => index}
+          numColumns={3}
+          contentContainerStyle={{
+            justifyContent: 'center',
+            // alignItems: 'flex-start',
+            // alignItems: 'center',
+            // flex: 1,
+            // marginLeft: 20,
+          }}
+        />
+      </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 220,
+    marginBottom: 110,
     // height: '100%',
     // display: 'flex',
     // flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // paddingHorizontal: 50,
   },
   head: {
     display: 'flex',
@@ -131,4 +155,5 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
 });
-export default BookShelf;
+
+export default memo(BookShelf);

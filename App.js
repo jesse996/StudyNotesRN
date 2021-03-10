@@ -4,7 +4,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from 'react-native-elements';
-
+import Toast from 'react-native-toast-message';
 import {Platform} from 'react-native';
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -19,8 +19,9 @@ import AddBook from './pages/AddBook';
 import AddBook2 from './pages/AddBook2';
 import Camera from './pages/Camera';
 import {Provider} from 'react-redux';
-import {store, persistor} from './store/index';
 import {PersistGate} from 'redux-persist/integration/react';
+// import store from './store/index';
+import {store, persistor} from './store/index';
 
 const theme = {
   Button: {
@@ -83,6 +84,7 @@ function App() {
           </NavigationContainer>
         </PersistGate>
       </Provider>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </SafeAreaProvider>
   );
 }

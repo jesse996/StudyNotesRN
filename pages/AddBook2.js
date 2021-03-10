@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, memo} from 'react';
 import {Text} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import {TextInput} from 'react-native';
@@ -6,6 +6,9 @@ import {StyleSheet} from 'react-native';
 import {View} from 'react-native';
 import {Button, Icon, Image} from 'react-native-elements';
 import ImagePicker from 'react-native-image-crop-picker';
+import {useDispatch} from 'react-redux';
+import Toast from 'react-native-toast-message';
+import {addBook} from '../store/testSlice';
 
 const AddBook2 = ({navigation}) => {
   const [bookName, setBookName] = useState('');
@@ -14,7 +17,18 @@ const AddBook2 = ({navigation}) => {
   const [publicDate, setPublicDate] = useState('');
   const [image, setImage] = useState();
 
-  const handleAddBook = () => {};
+  const dispatch = useDispatch();
+
+  const handleAddBook = () => {
+    dispatch(addBook({image, bookName, author, publishing, publicDate}));
+    Toast.show({
+      type: 'success',
+      text1: '成功',
+      text2: '添加成功',
+      position: 'bottom',
+    });
+    // navigation.goBack();
+  };
 
   return (
     <>
@@ -149,4 +163,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddBook2;
+export default memo(AddBook2);

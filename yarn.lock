@@ -1191,6 +1191,16 @@
     color "^3.1.3"
     react-native-iphone-x-helper "^1.3.0"
 
+"@reduxjs/toolkit@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.npm.taobao.org/@reduxjs/toolkit/download/@reduxjs/toolkit-1.5.0.tgz#1025c1ccb224d1fc06d8d98a61f6717d57e6d477"
+  integrity sha1-ECXBzLIk0fwG2NmKYfZxfVfm1Hc=
+  dependencies:
+    immer "^8.0.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+    reselect "^4.0.0"
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.npm.taobao.org/@sindresorhus/is/download/@sindresorhus/is-0.14.0.tgz?cache=0&sync_timestamp=1602542943738&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40sindresorhus%2Fis%2Fdownload%2F%40sindresorhus%2Fis-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -3825,6 +3835,11 @@ image-size@^0.6.0:
   resolved "https://registry.npm.taobao.org/image-size/download/image-size-0.6.3.tgz?cache=0&sync_timestamp=1614174807201&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fimage-size%2Fdownload%2Fimage-size-0.6.3.tgz#e7e5c65bb534bd7cdcedd6cb5166272a85f75fb2"
   integrity sha1-5+XGW7U0vXzc7dbLUWYnKoX3X7I=
 
+immer@^8.0.0:
+  version "8.0.1"
+  resolved "https://registry.npm.taobao.org/immer/download/immer-8.0.1.tgz#9c73db683e2b3975c424fb0572af5889877ae656"
+  integrity sha1-nHPbaD4rOXXEJPsFcq9YiYd65lY=
+
 import-fresh@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/import-fresh/download/import-fresh-2.0.0.tgz?cache=0&sync_timestamp=1608469485280&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fimport-fresh%2Fdownload%2Fimport-fresh-2.0.0.tgz#d81355c15612d386c61f9ddd3922d4304822a546"
@@ -6282,6 +6297,13 @@ react-native-size-matters@^0.3.1:
   resolved "https://registry.npm.taobao.org/react-native-size-matters/download/react-native-size-matters-0.3.1.tgz#24d0cfc335a2c730f6d58bd7b43ea5a41be4b49f"
   integrity sha1-JNDPwzWixzD21YvXtD6lpBvktJ8=
 
+react-native-toast-message@^1.4.9:
+  version "1.4.9"
+  resolved "https://registry.npm.taobao.org/react-native-toast-message/download/react-native-toast-message-1.4.9.tgz#47f33ac312fe2aee5dbdd4ae14745fa0d354102e"
+  integrity sha1-R/M6wxL+Ku5dvdSuFHRfoNNUEC4=
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-vector-icons@^8.1.0:
   version "8.1.0"
   resolved "https://registry.npm.taobao.org/react-native-vector-icons/download/react-native-vector-icons-8.1.0.tgz?cache=0&sync_timestamp=1614093637262&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native-vector-icons%2Fdownload%2Freact-native-vector-icons-8.1.0.tgz#e8ee2b17bc4d9f636da1c6f67feee8e2a850c3d8"
@@ -6410,7 +6432,7 @@ redux-thunk@^2.3.0:
   resolved "https://registry.npm.taobao.org/redux-thunk/download/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
   integrity sha1-UcLBmhhe1Rh6qpotCLZm0NZGdiI=
 
-redux@^4.0.5:
+redux@^4.0.0, redux@^4.0.5:
   version "4.0.5"
   resolved "https://registry.npm.taobao.org/redux/download/redux-4.0.5.tgz#4db5de5816e17891de8a80c424232d06f051d93f"
   integrity sha1-TbXeWBbheJHeioDEJCMtBvBR2T8=
@@ -6573,6 +6595,11 @@ require-main-filename@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/require-main-filename/download/require-main-filename-2.0.0.tgz#d0b329ecc7cc0f61649f62215be69af54aa8989b"
   integrity sha1-0LMp7MfMD2Fkn2IhW+aa9UqomJs=
+
+reselect@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npm.taobao.org/reselect/download/reselect-4.0.0.tgz#f2529830e5d3d0e021408b246a206ef4ea4437f7"
+  integrity sha1-8lKYMOXT0OAhQIskaiBu9OpEN/c=
 
 resolve-cwd@^3.0.0:
   version "3.0.0"
