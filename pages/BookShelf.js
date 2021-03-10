@@ -1,14 +1,14 @@
 import React, {memo, useRef, useState} from 'react';
 import {StyleSheet} from 'react-native';
-import {Button} from 'react-native';
 import {View} from 'react-native';
-import {Divider, Icon, Image, Text} from 'react-native-elements';
+import {Divider, Icon, Image, Text, Button} from 'react-native-elements';
 import {ActivityIndicator} from 'react-native';
 import {FlatList} from 'react-native';
 import {TouchableHighlight, TouchableOpacity} from 'react-native';
 import Toast from 'react-native-toast-message';
-import {connect, useSelector} from 'react-redux';
+import {connect, useDispatch, useSelector} from 'react-redux';
 import {Pressable} from 'react-native';
+import {deleteBooks} from '../store/testSlice';
 
 const BookItem = (props) => {
   const {image, selected} = props;
@@ -54,10 +54,15 @@ const BookItem = (props) => {
 };
 
 const BookShelf = ({url, navigation}) => {
-  const books = useSelector((state) => state.main.allBooks);
+  let books = useSelector((state) => state.main.allBooks);
+  if (!books) {
+    books = [];
+  }
+
+  const dispatch = useDispatch();
 
   const [selectBooksIndex, setSelectBooksIndex] = useState(
-    Array(books.length).fill(false),
+    Array(books?.length).fill(false),
   );
 
   const handlePressBook = (index) => {
@@ -76,11 +81,22 @@ const BookShelf = ({url, navigation}) => {
     }
   };
 
+  const handleDelete = () => {
+    dispatch(deleteBooks(selectBooksIndex));
+    setIsEditing(false);
+    setSelectBooksIndex(Array(books?.length).fill(false));
+    navigation.setOptions({
+      tabBarVisible: isEditing,
+    });
+  };
+
   const renderBooks = ({item, index}) => {
     if (index === 0) {
+      const disbale = isEditing;
       return (
         <TouchableOpacity
           style={styles.item}
+          disabled={disbale}
           onPress={() => {
             console.log('go search');
             navigation.navigate('AddBook');
@@ -98,17 +114,9 @@ const BookShelf = ({url, navigation}) => {
       />
     );
   };
-  // let data = [...Array(15).keys()].map((i) => ({
-  //   // id: i,
-  //   // url: 'https://img9.doubanio.com/view/photo/l/public/p2615115166.webp',
-  //   image: {},
-  //   bookName: 'test',
-  //   author: '',
-  //   publishing: '',
-  //   publicDate: '',
-  // }));
 
   // data = [...data, ...books];
+  // const data = [{}, ...books];
   const data = books;
 
   // const isEditing = useRef(false);
@@ -116,7 +124,7 @@ const BookShelf = ({url, navigation}) => {
   const toggleTarBarVisible = () => {
     // isEditing.current = !isEditing.current;
     setIsEditing((e) => !e);
-    setSelectBooksIndex(Array(books.length));
+    setSelectBooksIndex(Array(books?.length).fill(false));
     navigation.setOptions({
       tabBarVisible: isEditing,
     });
@@ -141,15 +149,28 @@ const BookShelf = ({url, navigation}) => {
         <Text style={styles.hint}>搜索书本或笔记内容</Text>
       </Pressable>
       {/* 书架内容 */}
-      <View style={styles.container}>
-        <FlatList
-          data={data}
-          renderItem={renderBooks}
-          keyExtractor={(item, index) => index}
-          numColumns={3}
-          contentContainerStyle={{justifyContent: 'center'}}
-        />
-      </View>
+      {/* <View style={styles.container}> */}
+      <FlatList
+        data={data}
+        renderItem={renderBooks}
+        keyExtractor={(item, index) => index}
+        numColumns={3}
+        contentContainerStyle={{
+          // width: '50%',
+          marginHorizontal: 15,
+        }}
+      />
+      {/* </View> */}
+      {/* 编辑时最下面的删除按钮 */}
+      {isEditing ? (
+        <Pressable>
+          <Button
+            title="删除"
+            buttonStyle={{backgroundColor: 'red'}}
+            onPress={handleDelete}
+          />
+        </Pressable>
+      ) : null}
     </>
   );
 };
@@ -207,8 +228,8 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   itemActive: {
-    backgroundColor: '#DDD',
-    zIndex: 20,
+    // backgroundColor: '#DDD',
+    // zIndex: 20,
   },
 });
 
