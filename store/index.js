@@ -1,4 +1,3 @@
-import {createStore, applyMiddleware} from 'redux';
 import {
   persistStore,
   persistReducer,
@@ -28,6 +27,8 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 // export const store = createStore(persistedReducer, applyMiddleware(thunk));
 export const store = configureStore({
   reducer: persistedReducer,
+
+  //tookit giude中给出解决和redux-persist配置报错问题的方法
   middleware: getDefaultMiddleware({
     serializableCheck: {
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
