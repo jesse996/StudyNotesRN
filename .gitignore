@@ -59,6 +59,6 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
-*java_pid32605.hprof
+**java_pid*.hprof
 my-upload-key.keystore
 **.jar
