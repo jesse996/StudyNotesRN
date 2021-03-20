@@ -8,7 +8,7 @@ import {Button, Header, Icon, Overlay, SearchBar} from 'react-native-elements';
 const AddBook = ({navigation}) => {
   const [search, setSearch] = useState('');
   const [showOverlay, setShowOverlay] = useState(false);
-  const handleSearch = (v) => {
+  const handleSearch = v => {
     setSearch(v);
   };
   return (

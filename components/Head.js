@@ -9,7 +9,7 @@ const theme = {
   //   reverse: true
   // }
 };
-const Head = (props) => {
+const Head = props => {
   return (
     <ThemeProvider theme={theme}>
       {/* <Icon name='menu-fold' type='antdesign' ></Icon> */}

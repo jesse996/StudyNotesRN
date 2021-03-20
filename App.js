@@ -22,6 +22,8 @@ import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 // import store from './store/index';
 import {store, persistor} from './store/index';
+import NoteProfile from './pages/NoteProfile';
+import NoteDetail from './pages/NoteDetail';
 
 const theme = {
   Button: {
@@ -38,7 +40,7 @@ const theme = {
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const HomeTabs = (props) => (
+const HomeTabs = props => (
   <Tab.Navigator>
     <Tab.Screen
       name="Home"
@@ -79,12 +81,14 @@ function App() {
                 <Stack.Screen name="AddBook" component={AddBook2} />
                 <Stack.Screen name="Camera" component={Camera} />
                 {/* <Stack.Screen name="AddBook2" component={AddBook2} /> */}
+                <Stack.Screen name="NoteProfile" component={NoteProfile} />
+                <Stack.Screen name="NoteDetail" component={NoteDetail} />
               </Stack.Navigator>
             </ThemeProvider>
           </NavigationContainer>
         </PersistGate>
       </Provider>
-      <Toast ref={(ref) => Toast.setRef(ref)} />
+      <Toast ref={ref => Toast.setRef(ref)} />
     </SafeAreaProvider>
   );
 }

@@ -10,7 +10,7 @@ import {connect, useDispatch, useSelector} from 'react-redux';
 import {Pressable} from 'react-native';
 import {deleteBooks} from '../store/testSlice';
 
-const BookItem = (props) => {
+const BookItem = props => {
   const {image, selected, bookName} = props;
   console.log('bookName:', bookName, ';');
   const source = image
@@ -59,7 +59,7 @@ const BookItem = (props) => {
 };
 
 const BookShelf = ({url, navigation}) => {
-  let books = useSelector((state) => state.main.allBooks);
+  let books = useSelector(state => state.main.allBooks);
   if (!books) {
     books = [];
   }
@@ -70,11 +70,13 @@ const BookShelf = ({url, navigation}) => {
     Array(books?.length).fill(false),
   );
 
-  const handlePressBook = (index) => {
+  const handlePressBook = index => {
     if (isEditing) {
       selectBooksIndex[index] = !selectBooksIndex[index];
       setSelectBooksIndex([...selectBooksIndex]);
     } else {
+      //进入笔记详情
+      navigation.navigate('NoteProfile');
     }
   };
 
@@ -86,7 +88,7 @@ const BookShelf = ({url, navigation}) => {
 
   const [isEditing, setIsEditing] = useState(false);
   const toggleTarBarVisible = () => {
-    setIsEditing((e) => !e);
+    setIsEditing(e => !e);
     setSelectBooksIndex(Array(books?.length).fill(false));
     navigation.setOptions({
       tabBarVisible: isEditing,

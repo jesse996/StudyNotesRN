@@ -57,11 +57,11 @@ const AddBook2 = ({navigation}) => {
           // cropperCircleOverlay: true,
           showCropGuidelines: false,
         })
-          .then((img) => {
+          .then(img => {
             // console.log(image);
             setImage(img);
           })
-          .catch((e) => {
+          .catch(e => {
             console.log('eroor:');
             console.log(e);
           })
@@ -86,11 +86,11 @@ const AddBook2 = ({navigation}) => {
           // cropperCircleOverlay: true,
           showCropGuidelines: false,
         })
-          .then((img) => {
+          .then(img => {
             setImage(img);
             // console.log(image);
           })
-          .catch((e) => {
+          .catch(e => {
             console.log(e);
           })
           .finally(() => {
@@ -141,7 +141,7 @@ const AddBook2 = ({navigation}) => {
             style={styles.input}
             placeholder="书籍名称"
             value={bookName}
-            onChangeText={(text) => {
+            onChangeText={text => {
               setBookName(text);
             }}
           />
@@ -149,7 +149,7 @@ const AddBook2 = ({navigation}) => {
             style={styles.input}
             placeholder="作者"
             value={author}
-            onChangeText={(text) => {
+            onChangeText={text => {
               setAuthor(text);
             }}
           />
@@ -157,7 +157,7 @@ const AddBook2 = ({navigation}) => {
             style={styles.input}
             placeholder="出版方"
             value={publishing}
-            onChangeText={(text) => {
+            onChangeText={text => {
               setPublishing(text);
             }}
           />
@@ -165,7 +165,7 @@ const AddBook2 = ({navigation}) => {
             style={styles.input}
             placeholder="出版日期"
             value={publicDate}
-            onChangeText={(text) => {
+            onChangeText={text => {
               setPublicDate(text);
             }}
           />
